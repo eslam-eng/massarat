@@ -49,7 +49,12 @@
                                                         <td>{{$employee->created_at}}</td>
                                                         <td>
                                                             <a role="button" href="{{route('employees.edit',$employee->id)}}" class="btn btn-warning"><i class="la la-edit"></i></a>
-                                                            <a role="button" href="{{route('employees.destroy',$employee->id)}}" class="btn btn-danger"><i class="la la-trash-o"></i></a>
+
+                                                            <form method="post" action="{{route('employees.destroy',$employee->id)}}" style="display: inline-block">
+                                                                @method('delete')
+                                                                @csrf
+                                                                <button type="submit"  class="btn btn-danger"><i class="la la-trash-o"></i></button>
+                                                            </form>
                                                         </td>
                                                     </tr>
                                                 @endforeach

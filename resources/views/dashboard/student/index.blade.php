@@ -10,13 +10,13 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">المعلمين</h4>
+                                    <h4 class="card-title">الطلاب</h4>
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
                                             <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
                                             <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                            <li><a role="button" class="btn btn-sm btn-primary" href="{{route('employees.create')}}"><i class="la la-plus la-sm"></i>اضافة</a></li>
+                                            <li><a role="button" class="btn btn-sm btn-primary" href="{{route('students.create')}}"><i class="la la-plus la-sm"></i>اضافة</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -26,30 +26,32 @@
                                             <thead>
                                             <tr>
                                                 <th>الاسم</th>
-                                                <th>القسم</th>
+                                                <th>الكليه</th>
                                                 <th>رقم التليفون</th>
-                                                <th>النوع</th>
                                                 <th>الحالة</th>
+                                                <th>العنوان</th>
                                                 <th>تاريخ الانشاء</th>
                                                 <th>الاجراءات</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach($employees as $employee)
+                                                @foreach($students as $student)
                                                     <tr>
-                                                        <td>{{$employee->name . " / " . $employee->employee_code}}</td>
+                                                        <td>{{$student->name}}</td>
+                                                        <td>{{$student->faculty}}</td>
+                                                        <td>{{$student->phone}}</td>
                                                         <td>
-                                                            <span class="badge badge-info">{{$employee->department->name}}</span>
+                                                            <span class="badge {{$student->status==1?'badge-success':'badge-danger'}}">{{$student->status==1?'نشط':'غير نشط'}}</span>
                                                         </td>
-                                                        <td>{{$employee->phone}}</td>
-                                                        <td>{{$employee->employee_type==\App\Enum\UserType::$TEACHER?'مدرس':'موظف'}}</td>
+                                                        <td>{{$student->address}}</td>
+                                                        <td>{{$student->created_at}}</td>
                                                         <td>
-                                                            <span class="badge {{$employee->is_active==1?'badge-success':'badge-danger'}}">{{$employee->is_active==1?'نشط':'غير نشط'}}</span>
-                                                        </td>
-                                                        <td>{{$employee->created_at}}</td>
-                                                        <td>
-                                                            <a role="button" href="{{route('employees.edit',$employee->id)}}" class="btn btn-warning"><i class="la la-edit"></i></a>
-                                                            <a role="button" href="{{route('employees.destroy',$employee->id)}}" class="btn btn-danger"><i class="la la-trash-o"></i></a>
+                                                            <a role="button" href="{{route('students.edit',$student->id)}}" class="btn btn-warning"><i class="la la-edit"></i></a>
+                                                            <form method="post" action="{{route('students.destroy',$student->id)}}" style="display: inline-block">
+                                                                @method('delete')
+                                                                @csrf
+                                                                <button type="submit"  class="btn btn-danger"><i class="la la-trash-o"></i></button>
+                                                            </form>
                                                         </td>
                                                     </tr>
                                                 @endforeach

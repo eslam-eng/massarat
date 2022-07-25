@@ -43,7 +43,11 @@
                                                         <td>{{$course->created_at}}</td>
                                                         <td>
                                                             <a role="button" href="{{route('courses.edit',$course->id)}}" class="btn btn-warning"><i class="la la-edit"></i></a>
-                                                            <a role="button" href="{{route('courses.destroy',$course->id)}}" class="btn btn-danger"><i class="la la-trash-o"></i></a>
+                                                            <form method="post" action="{{route('courses.destroy',$course->id)}}" style="display: inline-block">
+                                                                @method('delete')
+                                                                @csrf
+                                                                <button type="submit"  class="btn btn-danger"><i class="la la-trash-o"></i></button>
+                                                            </form>
                                                         </td>
                                                     </tr>
                                                 @endforeach
